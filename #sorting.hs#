@@ -1,0 +1,44 @@
+
+quicksort :: Ord a => [a] -> [a]
+quicksort [] = []
+quicksort (x : xs) = 
+          quicksort lower ++ [x] ++ quicksort upper
+          where 
+                lower = [ l | l <- xs, l < x]
+                upper = [ u | u <- xs, u >= x]
+
+
+
+mergesort :: Ord a => [a] -> [a]
+mergesort [] = []
+mergesort [x] = [x]
+mergesort (xs) = merge (mergesort xs1) (mergesort xs2)
+          where
+                (xs1, xs2) = split xs
+
+split :: [a] -> ([a], [a])
+split (x:y:zs) = (x:xs,y:ys) where (xs,ys) = split zs
+split xs       = (xs, [])
+
+merge :: Ord a => [a] -> [a] -> [a]
+-- merge [x | x <- [1..100], x `mod` 2 == 0] [x | x <- [1..100], x `mod` 2 /= 0]
+merge xs [] = xs
+merge [] xs = xs
+merge (x:xs) (y:ys) = 
+      if x < y then
+         x : merge xs (y:ys)
+      else
+         y : merge (x:xs) ys      
+
+
+
+
+{-
+merge (x : xs) (y : ys) = [l] ++ merge ls hs
+          where
+              l = if x < y then x else y
+              ls = if x < y then xs else ys
+              hs = if x < y then y : ys else x : xs
+
+-}
+

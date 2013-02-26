@@ -1,0 +1,12 @@
+-- String -> [String] -> [[String]] -> [String] -> String
+-- words :: String -> [String]
+-- brokenLines :: [String] -> [[String]]
+-- wordJoinedLines :: [[String]] -> [String]
+-- joinedLines :: [String] -> String
+
+brokenLines :: String -> String
+brokenLines [] = []
+brokenLines wordList = brokenLine : brokenLines remainingLines
+  where (brokenLine, remainingLines) = splitAt (brokenLineWordCount wordList) wordList
+
+

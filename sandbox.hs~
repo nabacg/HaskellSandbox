@@ -1,0 +1,120 @@
+-- C+c, C+l to reload file
+-- C+c, C+z to start REPL
+
+doubleMe x = x + x
+
+doubleUs x y = doubleMe x + doubleMe y
+
+doubleSmallNumber x = if x > 100
+		      	 then
+				x
+			 else
+			 	x * 2
+
+doubleList (x : xs) = doubleMe x : doubleList xs
+doubleList [] = []	      	      
+
+quadratic n =  [x*x | x <- [1..n]]
+
+twoSets n z = [(x, 2*x + y) | x <- [1..n], y <- [1..z]]
+
+listAnnot xs = [x*x +2 | x <- xs, x `mod` 5 == 0]
+
+onlyCapitals str = [s | s <- str, s `elem` ['A'..'Z']]
+
+--test str = str ++ "TEST"
+
+rightTriangles =  [ (a, b, c) | c <- [1..10], b <- [1..c], a <- [1..b],
+                    a^2 +  b^2 == c^2, a + b + c == 24]
+factorial :: Integer -> Integer -- if it was just Int factorial 50 would overflow
+factorial n = product [1..n]
+
+-- 60 |> factorial
+x |> y = y x
+
+lucky :: (Integral a) => a -> String
+lucky 7 = "LUCKY NUMBER SEVEN!"
+lucky x = "Sorry, you're out of luck pal!"
+
+factorial' :: (Integral a) => a -> a
+factorial' 0 = 1
+factorial' x = x * factorial' (x - 1)
+
+addVectors :: (Num a) => (a, a) -> (a, a) -> (a, a)
+addVectors (x1, y1) (x2, y2) = (x1+x2, y1+y2)
+
+listBindingExample = [a +b | (a,b) <- zip [1..10] [100,98..80]]
+
+head' :: [a] -> a
+head' [] = error "Can't call head on empty list"
+head' (x:_) = x
+
+tell :: (Show a) => [a] -> String
+tell [] = "The list is empty"
+tell (x:[]) = "The list has one element " ++ show x
+tell (x:y:[]) = "The list has two elements " ++ show x ++ ", " ++ show y
+tell (x:y:_) = "The list is too long, first two elements: " ++ show x ++ ", " ++ show y
+
+length' :: (Num b) => [a] -> b
+length' [] = 0
+length' (_:xs) = 1 + length' xs
+
+sum' :: (Num a) => [a] -> a
+sum' [] = 0
+sum' (x:xs) = x + sum' xs
+
+capital :: String -> String
+capital "" = "Empty string, whoops!"
+capital all@(x:xs) = "The first letter of " ++ all ++ " is " ++ [x]
+
+bmiTell :: (RealFloat a) => a -> a  -> String
+bmiTell weight height
+  | bmi <= 18.5 = "You're underweight"
+  | bmi <= 25.0 =  "You're normal"
+  | bmi <= 30 = "you're fat"
+  | otherwise = "You're a whale"
+  where bmi = weight / height ^2
+
+max' :: (Ord a) => a -> a -> a
+max' a b
+  | a > b = a
+  | otherwise = b
+
+
+myCompare :: (Ord a) => a -> a -> Ordering
+a `myCompare` b
+  | a > b = GT
+  | a == b = EQ
+  | otherwise = LT
+
+calcBmis :: (RealFloat a) => [(a, a)] -> [a]
+calcBmis xs = [bmi w h | (w, h) <- xs]
+  where bmi weight height = weight / height ^ 2
+--calcBmis (zip [50,55..78] [1.67,1.72..1.80])
+
+
+cylinder :: (RealFloat a) => a -> a -> a
+cylinder r h =
+  let sideArea = 2 * pi * r * h
+      topArea = pi * r^2
+  in sideArea + 2 * topArea
+
+describeList :: [a] -> String
+describeList xs = "The list is " ++ case xs of [] -> " empty"
+                                               [x] -> " singleton."
+                                               xs -> " full list"
+
+
+
+reverseWords :: String -> String
+reverseWords = unwords . map reverse . words
+
+
+main = do
+  line <- getLine
+  if null line
+    then return ()
+    perelse do
+     putStrLn $ reverseWords line
+     main
+     

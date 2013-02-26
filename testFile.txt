@@ -1,0 +1,3 @@
+ Because we don't get a handle with which to identify our file, we can't close it manually, so Haskell does that for us when we use readFile.
+
+writeFile has a type of writeFile :: FilePath -> String -> IO (). It takes a path to a file and a string to write to that file and returns an I/O action that will do the writing. If such a file already exists, it will be stomped down to zero length before being written on. Here's how to turn girlfriend.txt into a CAPSLOCKED version and write it to girlfriendcaps.txt: 
