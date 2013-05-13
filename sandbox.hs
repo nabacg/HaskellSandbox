@@ -104,11 +104,14 @@ describeList xs = "The list is " ++ case xs of [] -> " empty"
                                                [x] -> " singleton."
                                                xs -> " full list"
 
-
-
 reverseWords :: String -> String
 reverseWords = unwords . map reverse . words
 
+secondLast :: [a] -> a
+secondLast [] = error "list not long enough"
+--secondLast [x] = error "list not long enough"
+secondLast (x:_:[]) = x
+secondLast (x:xs) = secondLast xs
 
 main = do
   line <- getLine
@@ -117,3 +120,4 @@ main = do
     else do
      putStrLn $ reverseWords line
      main
+
